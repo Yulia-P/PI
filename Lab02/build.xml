@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project name="as_pys" default="copy" basedir=".">
+    <target name="init">
+        <property name="server" value="C:\Users\37529\Documents\1Uni\ПI(Смелов)\apache-tomcat-9.0.65" />        
+        <property name="server_proj" value="${server}\webapps\as_pys" />        
+        <property name="lab" value="C:\Users\37529\Documents\GitHub\PI\Lab02" />
+
+        <path id="compile.classpath">
+            <fileset dir="${server}\lib">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+
+        <echo message="properties initialized" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac destdir="${lab}\src\WEB-INF\classes" srcdir="${lab}\src\java">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+
+    <target name="build" depends="compile">
+        <delete file="${lab}\as_pys.war" />
+        <war destfile="${lab}\as_pys.war" webxml="${lab}\src\WEB-INF\web.xml">
+            <fileset dir="${lab}\src"/>
+        </war>
+    </target>
+
+    <target name="deploy" depends="build">
+        <delete dir="${server_proj}" />
+        <delete file="${server}\webapps\as_pys.war" />        
+
+        <copy file="${lab}\as_pys.war" todir="${server}\webapps" />
+    </target>
+</project>
