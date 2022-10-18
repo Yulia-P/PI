@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project name="Lab3" default="copy">
+
+    <target name="init">
+        <property name = "server" value = "C:\Users\37529\Documents\1Uni\ПI(Смелов)\apache-tomcat-9.0.65\" />
+        <!-- <property name="server_proj" value="${server}\webapps\as_pys" />     -->
+        <property name = "work" value = "C:\Users\37529\Documents\GitHub\PI\Lab03\" />
+    </target>
+
+    <target name="create" depends="init">
+        <delete dir="${server}webapps\Lab3" />
+        <delete dir="${work}build" />
+        <mkdir dir="${server}webapps\Lab3" />
+        <mkdir dir="${server}webapps\Lab3\WEB-INF" />
+        <mkdir dir="${server}webapps\Lab3\WEB-INF\classes" />
+        <mkdir dir="${server}webapps\Lab3\WEB-INF\lib" />
+        <mkdir dir="${work}build\classes" />
+    </target>
+
+    <target name="compile" depends="create">
+        <javac srcdir = "${work}src" destdir = "${work}build\classes">
+            <classpath>
+                <fileset dir="${work}lib"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="build" depends="compile">
+    <delete file="${work}\Lab3.war" />
+        <war destfile="${work}\Lab3.war" webxml="${work}\web\WEB-INF\web.xml"> <fileset dir="${work}\web"/></war>
+    </target>
+
+    <target name="copy" depends="build">
+        <copy file= "${work}web\WEB-INF\web.xml" todir="${server}webapps\Lab3\WEB-INF\" />
+        <copy file= "${work}index.html" todir="${server}webapps\Lab3\" />
+        <copy file= "${work}hello.html" todir="${server}webapps\Lab3\" />
+        <copy todir="${server}webapps\Lab3\WEB-INF\classes"> 
+        <fileset dir="${work}build\classes"/></copy>
+        <copy todir="${server}webapps\Lab3\WEB-INF\lib"> <fileset dir="${work}lib"/></copy>
+        <delete file="${server}\webapps\Lab3.war" />    
+        <copy file="${work}\Lab3.war" todir="${server}\webapps" />
+    </target>
+
+    <!-- <target name="deploy" depends="copy" >   
+    </target> -->
+</project>

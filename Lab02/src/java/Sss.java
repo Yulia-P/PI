@@ -22,8 +22,8 @@ public class Sss extends HttpServlet {
       super.service(req, resp);
       System.out.println("service");
       resp.getWriter().write(
-                    "\nmethod:" + req.getMethod() +
                     "\n" + this.getClass().getName() + ":service" +
+                    "\nmethod:" + req.getMethod() +  
                     "\nserver-name:" + req.getServerName() +
                     "\nIP:" + req.getLocalAddr() +
                     "\nURL:" + req.getRequestURL() + "?" + req.getQueryString());

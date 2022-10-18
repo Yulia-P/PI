@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>Lab3 index</title>
+</head>
+<body>
+<a href="Sss?type=forward&firstname=aaa&lastname=bbb">forward GET from Sss to Ggg</a><br>
+<a href="Sss?type=redirect&firstname=aaa&lastname=bbb">redirect GET from Sss to Ggg</a><br>
+<a href="Sss?type=request&firstname=aaa&lastname=bbb">GET request from Sss to Ggg</a><br>
+<a href="Sss?type=forwardX2&firstname=aaa&lastname=bbb">GET forward X2</a><br>
+<a href="Sss?type=redirectX2&firstname=aaa&lastname=bbb">GET redirect X2</a><br><br>
+<form action="Sss" method = "post">
+    <input type="submit" name="action" value="forward"/>
+    <input type="submit" name="action" value="redirect"/>
+    <input type="submit" name="action" value="request"/>
+</form>
+</body>
+</html>
