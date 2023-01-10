@@ -17,11 +17,14 @@ public class Ggg extends HttpServlet {
         System.out.println("Ggg:service");
         String type = rq.getParameter("type");
         PrintWriter pw = rs.getWriter();
+
         if(type!=null && type.equals("forwardX2")) {
             RequestDispatcher rd = null;
             System.out.println("Ggg:forwardX2");
+            // 5
+            rs.getWriter().write("TASK 5");  
+            // 5
             rd = rq.getRequestDispatcher("hello.html");
-            // объекты запроса и ответа остаются теми же
             rd.forward(rq, rs);
         } else if(type!=null && type.equals("redirectX2")) {
             System.out.println("Ggg:redirectX2");

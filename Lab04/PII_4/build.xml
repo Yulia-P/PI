@@ -1,0 +1,51 @@
+<project name="PII_4" default="copy">
+    <target name="init">
+        <echo message="Build PII_4 Project" />
+        <property name="server" value="C:\Users\37529\Documents\1Uni\ПI(Смелов)\apache-tomcat-9.0.65\" />
+        <!-- <property name="work" value="C:\Users\37529\Documents\1Uni\ПI(Смелов)\PII_4\" /> -->
+        <property name="work" value=".\" />
+        <mkdir dir=".\build\" />
+    </target>
+
+    <target name="compile" depends="init">
+        <delete verbose="true">
+            <fileset dir="${work}build" />
+        </delete>
+        <javac srcdir="${work}src" destdir="${work}\build">
+            <classpath>
+                <fileset file="${server}\lib\servlet-api.jar" />
+                <fileset file="${server}\lib\commons-httpclient-3.1.jar" />
+                <fileset file="${server}\lib\commons-logging-1.2.jar" />
+                <fileset file="${server}\lib\commons-codec-1.15.jar" />
+                <fileset file="${server}\lib\org-apache-commons-codec.jar" />
+                <fileset file="${server}\lib\org.apache.commons.httpclient.jar" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="create" depends="compile">
+        <delete dir="${server}webapps\AS_PYS4\" />
+        <mkdir dir="${server}webapps\AS_PYS4\" />
+        <mkdir dir="${server}webapps\AS_PYS4\WEB-INF" />
+    </target>
+
+    <target name="copy" depends="create">
+        <copy file="${work}web\WEB-INF\web.xml" todir="${server}webapps\AS_PYS4\WEB-INF\" />
+        <copy todir="${server}webapps\AS_PYS4\">
+            <fileset dir="${work}\web\jsp" />
+        </copy>
+        <copy todir="${server}webapps\AS_PYS4\WEB-INF\classes">
+            <fileset dir="${work}build" />
+        </copy>
+        <copy todir="${server}webapps\AS_PYS4\WEB-INF\lib">
+            <fileset dir="${work}\web\lib" />
+        </copy>
+    </target>
+
+    <target name="war" depends="compile">
+        <war destfile="dist/AS_PYS4.war" webxml="web/WEB-INF/web.xml">
+            <classes dir="build" />
+            <fileset dir="web/jsp" />
+        </war>
+    </target>
+</project> 

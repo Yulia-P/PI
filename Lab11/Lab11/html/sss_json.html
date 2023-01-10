@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sss_json demo</title>
+</head>
+<body>
+<h1>Sss_json</h1>
+<div>
+    <a href="sss_header.html">header</a>
+    <a href="sss_xml.html">xml</a>
+    <div>
+        <input id="n" type="number" title="">
+    </div>
+    <div>
+        <input type="button" value="Sss_json sync" onclick="getJSON(false)">
+        <input type="button" value="Sss_json async" onclick="getJSON(true)">
+    </div>
+    <div id="result">
+
+    </div>
+</div>
+</body>
+<script>
+    function stringifyJSON(req){
+        const arr = JSON.parse(req.responseText);
+        return arr.join(" ");
+    }
+    function getJSON(async) {
+        console.log(async);
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/Lab11/Sss_json", async);
+        xhr.setRequestHeader("XRand-N", document.getElementById('n').value);
+        xhr.send();
+        if (async) {
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("result").innerHTML = stringifyJSON(xhr);
+                }
+            };
+        } else {
+            document.getElementById("result").innerHTML = stringifyJSON(xhr);
+        }
+    }
+</script>
+</html>

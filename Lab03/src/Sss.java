@@ -23,26 +23,17 @@ public class Sss extends HttpServlet {
         HttpClient hc = new HttpClient();
         System.out.println("type = "+type);
         System.out.println("action = "+action);
+
         if(rq.getMethod().equals("GET")) {
             if(type.equals("forward") || type.equals("forwardX2")) {
                 PrintWriter pw = rs.getWriter();
                 System.out.println("Sss:forward");
                 RequestDispatcher rd = null;
+                rs.getWriter().write("output Task5 from Sss");
                 rd = rq.getRequestDispatcher("/Ggg");
-
-                /*объекты запроса и ответа остаются теми же
-                НЕ РАБОТАЕТ!!!!
-               pw.println("<html><body>"
-                       + "<h3>Sss servlet</h3>"
-                       + "<h3>"+rq.getMethod()+"</h3>"
-                       + "<br>type = " + type
-                       + "<br>action = " + rq.getParameter("action")
-                       + "<br>firstname = " + rq.getParameter("firstname")
-                       + "<br>lastname = " + rq.getParameter("lastname")
-                       + "</body></html>");
-               pw.flush();
-               pw.close();*/
-
+                //5
+              
+                //5
                 rd.forward(rq, rs);
             } else if(type.equals("redirect")) {
                 System.out.println("Sss:redirect");
@@ -64,14 +55,12 @@ public class Sss extends HttpServlet {
                 System.out.println("Sss:forward");
                 RequestDispatcher rd = null;
                 rd = rq.getRequestDispatcher("/Ggg");
-                // объекты запроса и ответа остаются теми же
+
                 rd.forward(rq, rs);
             } else if(action.equals("redirect")) {
                 System.out.println("Sss:redirect");
                 rs.sendRedirect("/Lab3/Ggg");
-                /* no data loss
-                rs.setStatus(307);
-                rs.setHeader("Location", "Ggg");*/
+
             } else if(action.equals("request")) {
                 PostMethod gm = new PostMethod("http://localhost:8081/Lab3/Ggg");
                 gm.addParameter("action",action);

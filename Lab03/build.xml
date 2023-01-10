@@ -4,7 +4,8 @@
     <target name="init">
         <property name = "server" value = "C:\Users\37529\Documents\1Uni\ПI(Смелов)\apache-tomcat-9.0.65\" />
         <!-- <property name="server_proj" value="${server}\webapps\as_pys" />     -->
-        <property name = "work" value = "C:\Users\37529\Documents\GitHub\PI\Lab03\" />
+        <!-- <property name = "work" value = "C:\Users\37529\Documents\GitHub\PI\Lab03\" /> -->
+        <property name="work" value=".\" />
     </target>
 
     <target name="create" depends="init">

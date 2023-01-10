@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project name="Lab10" default="copy">
+    <target name="init">
+        <property name = "server" value = "C:\Users\37529\Documents\1Uni\ПI(Смелов)\apache-tomcat-9.0.65\" />
+        <!-- <property name = "work" value = "C:\Users\37529\Documents\GitHub\PI\Lab10\" /> -->
+        <property name="work" value=".\" />
+    </target>
+
+    <target name="create" depends="init">
+        <delete dir="${server}webapps\Lab10" />
+        <delete dir="${work}build" />
+        <mkdir dir="${server}webapps\Lab10" />
+        <mkdir dir="${server}webapps\Lab10\WEB-INF" />
+        <mkdir dir="${work}build" />
+    </target>
+
+    <target name="compile" depends="create">
+        <javac srcdir = "${work}src"
+               destdir = "${work}\build">
+            <classpath>
+                <fileset dir="${work}\WEB-INF\lib"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="copy" depends="compile">
+        <copy todir="${server}webapps\Lab10\WEB-INF">
+            <fileset dir="${work}WEB-INF"/>
+        </copy>
+        <copy todir="${server}webapps\Lab10">
+            <fileset dir="${work}html"/>
+        </copy>
+        <mkdir dir="${server}webapps\Lab10\WEB-INF\classes" />
+        <copy todir="${server}webapps\Lab10\WEB-INF\classes">
+            <fileset dir="${work}build"/>
+        </copy>
+    </target>
+
+       <target name="war" depends="copy">
+         <delete file="${work}\Lab10.war" />
+        <war destfile="${work}\Lab10.war" webxml="${work}\WEB-INF\web.xml"> <fileset dir="${work}\WEB-INF"/></war>
+        <delete file="${server}\webapps\Lab10.war" />    
+        <copy file="${work}\Lab10.war" todir="${server}\webapps" />
+    </target>
+
+</project>

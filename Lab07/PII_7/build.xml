@@ -1,0 +1,39 @@
+<project name="PII_7" default="copy">
+    <target name="init">
+        <echo message="Build PII_7 Project" />
+        <property name="server" value="C:\Users\37529\Documents\1Uni\ПI(Смелов)\apache-tomcat-9.0.65\" />
+        <property name="work" value=".\" />
+        <mkdir dir=".\build\" />
+    </target>
+
+    <target name="compile" depends="init">
+        <delete verbose="true">
+            <fileset dir="${work}build" />
+        </delete>
+        <javac srcdir="${work}src" destdir="${work}\build">
+            <classpath>
+                <fileset file="${server}\lib\servlet-api.jar" />
+                <fileset file="${server}\lib\jsp-api.jar" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="create" depends="compile">
+        <delete dir="${server}webapps\AS_PYS7\" />
+        <mkdir dir="${server}webapps\AS_PYS7\" />
+        <mkdir dir="${server}webapps\AS_PYS7\WEB-INF" />
+    </target>
+
+    <target name="copy" depends="create">
+        <copy file="${work}web\WEB-INF\web.xml" todir="${server}webapps\AS_PYS7\WEB-INF\" />
+        <copy todir="${server}webapps\AS_PYS7\">
+            <fileset dir="${work}\web\jsp" />
+        </copy>
+        <copy todir="${server}webapps\AS_PYS7\WEB-INF\classes">
+            <fileset dir="${work}build" />
+        </copy>
+        <copy todir="${server}webapps\AS_PYS7\WEB-INF\lib">
+            <fileset dir="${work}\web\lib" />
+        </copy>
+    </target>
+</project> 

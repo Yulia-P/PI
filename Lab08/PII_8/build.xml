@@ -1,0 +1,41 @@
+<project name="PII_8" default="copy">
+    <target name="init">
+        <echo message="Build PII_8 Project" />
+        <property name="server" value="C:\Users\37529\Documents\1Uni\ПI(Смелов)\apache-tomcat-9.0.65\" />
+        <property name="work" value=".\" />
+        <mkdir dir=".\build\" />
+    </target>
+
+    <target name="compile" depends="init">
+        <delete verbose="true">
+            <fileset dir="${work}build" />
+        </delete>
+        <javac srcdir="${work}src" destdir="${work}build">
+            <classpath>
+                <fileset file="${work}lib\commons-codec-1.15.jar" />
+                <fileset file="${work}lib\commons-httpclient-3.1.jar" />
+                <fileset file="${work}lib\commons-logging-1.2.jar" />
+                <fileset file="${work}lib\javax.servlet.jar" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="create" depends="compile">
+        <delete dir="${server}webapps\AS_PYS8\" />
+        <mkdir dir="${server}webapps\AS_PYS8\" />
+        <mkdir dir="${server}webapps\AS_PYS8\WEB-INF" />
+    </target>
+
+    <target name="copy" depends="create">
+        <copy file="${work}web\WEB-INF\web.xml" todir="${server}webapps\AS_PYS8\WEB-INF\" />
+        <copy todir="${server}webapps\AS_PYS8\WEB-INF\classes">
+            <fileset dir="${work}build" />
+        </copy>
+        <copy todir="${server}webapps\AS_PYS8\">
+            <fileset dir="${work}\web\jsp" />
+        </copy>
+        <copy todir="${server}webapps\AS_PYS8\WEB-INF\lib">
+            <fileset dir="${work}lib" />
+        </copy>
+    </target>
+</project>
